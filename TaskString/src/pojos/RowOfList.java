@@ -35,6 +35,7 @@ public class RowOfList {
 	}
 	
 	public boolean toGroup(RowOfList resourceRow){	
+				
 		if(!resourceRow.firstElement.equals("") & resourceRow.firstElement.equals(firstElement)) {
 			return true;
 		}

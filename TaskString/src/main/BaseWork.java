@@ -26,10 +26,16 @@ public class BaseWork {
 		long curTime1 = System.currentTimeMillis(); 
 		result.clear();	
 		//***группирую элементы
-		group.queAll.stream()
+		group.queAll.parallelStream()
 			    .filter(row -> row.toGroup(rowOfL))
 			    .forEach(row -> result.add(row));
-
+		
+		long curTime8 = System.currentTimeMillis(); 		
+		int msek9 = (int) (curTime8 - curTime1);
+		System.out.println("одна группировка "+msek9);
+		
+		
+		
 		this.delDeepQueue(result);//*****удалил из очереди всё что сгруппировалось чтоб не бегать вновь								  
 		
 		queue.addAll(result);///***служебная очередь для расширения группы по другим столбцам	
@@ -38,10 +44,12 @@ public class BaseWork {
 		}	
 		//***создаю карту: если ключ новый - создаётся, если ключ уже есть - в значения добавляется группа
 		int resultSize = result.size();
+
+		
 		if(resultSize>1){
 			List<RowOfList> res = new ArrayList<>();
 			res.addAll(result);		
-			if (cheetMap.containsKey(resultSize)){
+			if (cheetMap.containsKey(resultSize)){                       //******быстро
 				cheetMap.get(resultSize).add(res);
 			}else {
 				List<List<RowOfList>> newList = new ArrayList<>();
@@ -53,6 +61,7 @@ public class BaseWork {
 		long curTime2 = System.currentTimeMillis(); 		
 		int msek = (int) (curTime2 - curTime1);
 		System.out.println("ИТЕРАЦИЯ "+iter+" выполнеа за : "+msek+" мс");
+		System.out.println("--------------------------------");
 		iter++;
 	}
 	
@@ -81,23 +90,34 @@ public class BaseWork {
 		}
 	}
 	 private void sortingMap(Consumer<Entry<Integer, List<List<RowOfList>>>> cons ){
-		 cheetMap.entrySet().stream()
+		 
+		 cheetMap.entrySet().parallelStream()
 			.sorted(Map.Entry.<Integer,List<List<RowOfList>>>comparingByKey().reversed())//***по уменьшению размера
 			.forEach(cons);
+
 	 }
 	
 	private void delDeepQueue(List<RowOfList> delList){
+		long curTime14 = System.currentTimeMillis(); 
+		
+		
 		List<RowOfList> changeList = new ArrayList<>();
 		changeList.addAll(group.queAll);
 		group.queAll.clear();
 		delList.forEach(row -> changeList.remove(changeList.indexOf(row)));
 		group.queAll.addAll(changeList);
 		changeList.clear();
+		
+		long curTime15 = System.currentTimeMillis(); 		
+		int msek15 = (int) (curTime15 - curTime14);
+		System.out.println("одно удаление из глубиныы "+msek15);
 	}
 	
 	private void second(RowOfList rowOf){
+		long curTime11 = System.currentTimeMillis();
+		
 		List<RowOfList> subresult = new ArrayList<>();
-		group.queAll.stream()
+		group.queAll.parallelStream()
 			    .filter(row -> row.toGroup(rowOf))
 			    .forEachOrdered(row -> subresult.add(row));
 		this.delDeepQueue(subresult);//*****удалил из очереди всё что сгруппировалось				
@@ -105,6 +125,9 @@ public class BaseWork {
 			result.addAll(subresult);
 			queue.addAll(subresult);
 		}
-
+		
+		long curTime12 = System.currentTimeMillis(); 		
+		int msek11 = (int) (curTime12 - curTime11);
+		System.out.println("один sekond "+msek11);
 	}	
 }
