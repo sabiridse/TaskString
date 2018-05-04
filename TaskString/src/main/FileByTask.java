@@ -19,7 +19,7 @@ public class FileByTask {
 			int qwe = 1;
 			long curTime1 = System.currentTimeMillis(); 
 			
-			CSVReader reader = new CSVReader(new FileReader("src/resources/lng-big.csv"), ';','\t',0);						
+			CSVReader reader = new CSVReader(new FileReader("src/resources/lng.csv"), ';','\t',0);						
 			String[] record = null;
 			while ((record = reader.readNext()) != null) {
 				if(record.length>2){
