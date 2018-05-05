@@ -1,4 +1,4 @@
-package pojos;
+package pojo;
 
 public class RowOfList {
 
@@ -32,26 +32,6 @@ public class RowOfList {
 	}
 	public void setThirdElement(String thirdElement) {
 		this.thirdElement = thirdElement;
-	}
-	
-	public boolean toGroup(RowOfList resourceRow){	
-				
-		if(!resourceRow.firstElement.equals("") & resourceRow.firstElement.equals(firstElement)) {
-			return true;
-		}
-		if(!resourceRow.secondElement.equals("") & resourceRow.secondElement.equals(secondElement)) {
-			return true;
-		}
-		if(!resourceRow.thirdElement.equals("") & resourceRow.thirdElement.equals(thirdElement)) {
-			return true;
-		}
-		return false;
-	}
-	
-	private String nullToNull(Long inPut){
-		if (inPut == 0L)
-		return "";
-		return inPut+"";
 	}
 	
 	@Override

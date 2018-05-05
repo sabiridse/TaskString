@@ -6,14 +6,10 @@ public class Main {
 		System.out.println("Начал работу");		
 		long curTime1 = System.currentTimeMillis(); 
 		
-		//new BaseWork().addDataForOutPut();
-		
-		
-		new GroupTest();
-		
-		
+		new Grouping();
+				
 		long curTime2 = System.currentTimeMillis(); 		
 		int msek = (int) (curTime2 - curTime1);
-		System.out.println("Всего: "+msek+" мс");
+		System.out.println("Выполнено за "+msek+" мс");
 	}
 }

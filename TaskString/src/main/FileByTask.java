@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Set;
 import au.com.bytecode.opencsv.CSVReader;
 import au.com.bytecode.opencsv.CSVWriter;
-import pojos.RowOfList;
+import pojo.RowOfList;
 
 public class FileByTask {
 
@@ -16,10 +16,7 @@ public class FileByTask {
 			
 		public void readCsv() throws IOException{	
 			
-			int qwe = 1;
-			long curTime1 = System.currentTimeMillis(); 
-			
-			CSVReader reader = new CSVReader(new FileReader("src/resources/lng.csv"), ';','\t',0);						
+			CSVReader reader = new CSVReader(new FileReader("src/resources/lng-big.csv"), ';','\t',0);						
 			String[] record = null;
 			while ((record = reader.readNext()) != null) {
 				if(record.length>2){
@@ -27,16 +24,13 @@ public class FileByTask {
 												  this.replaceChar(record[1]),
 												  this.replaceChar(record[2]));				
 							setOfRow.add(row);
-							qwe++;
 				}				
 			}				
 			reader.close();
-			
-			long curTime2 = System.currentTimeMillis(); 		
-			int msek = (int) (curTime2 - curTime1);
-			System.out.println("чтение CSV: "+msek+" мс, размер SET "+setOfRow.size()+" число итераций "+qwe);
+
 		}		
 		public void writeCsv(List<String> list) throws IOException{
+			
 			CSVWriter writer = new CSVWriter(new FileWriter("src/resources/out.csv"),';','\u0000');
 			list.stream()
 				.forEachOrdered(row -> writer.writeNext(new String[] {row}));					
