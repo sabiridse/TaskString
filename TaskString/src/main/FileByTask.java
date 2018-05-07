@@ -27,7 +27,6 @@ public class FileByTask {
 				}				
 			}				
 			reader.close();
-
 		}		
 		public void writeCsv(List<String> list) throws IOException{
 			
@@ -37,8 +36,9 @@ public class FileByTask {
 			writer.close();
 		}
 		private String replaceChar(String inPut){
-			if(inPut.isEmpty())
+			if(inPut.isEmpty()) {
 				return "";
+			}
 			return inPut.substring(1, inPut.length()-1);
 	}
 }
