@@ -6,7 +6,7 @@ public class Main {
 		System.out.println("Начал работу");		
 		long curTime1 = System.currentTimeMillis(); 
 		
-		new Grouping();
+		new Grouping();///parallel
 				
 		long curTime2 = System.currentTimeMillis(); 		
 		int msek = (int) (curTime2 - curTime1);
