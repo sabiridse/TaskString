@@ -10,18 +10,21 @@ import java.util.stream.Collectors;
 import pojo.RowOfList;
 
 public class Service {
+	
+	private static List<RowOfList> listRemover = new ArrayList<>();
 	public static Set<RowOfList> checkDoubleList = new HashSet<>();
+	static int iter = 1;
 	
-	
-	public static Set<RowOfList> groupList(Set<RowOfList> inputList,
-				  Function<RowOfList,Set<RowOfList>> func1,
-				  Function<RowOfList,Set<RowOfList>> func2){
+	public static List<RowOfList> groupList(List<RowOfList> inputList,
+				  Function<RowOfList,List<RowOfList>> func1,
+				  Function<RowOfList,List<RowOfList>> func2){
 
 			Set<RowOfList> subList = new HashSet<>();//***чтоб без дублей
-			
+			listRemover.clear();
+				
 			subList.addAll(inputList);
 			inputList.stream()
-			.forEach(row -> { try{
+			.forEachOrdered(row -> { try{
 									subList.addAll(func1.apply(row));
 									checkDoubleList.addAll(subList);
 								} catch(Exception e){};//***если елемент "" или нет совпадений будет NULL и ничего не добавиться
@@ -30,19 +33,23 @@ public class Service {
 									checkDoubleList.addAll(subList);
 								} catch(Exception e){};//***если елемент "" или нет совпадений будет NULL и ничего не добавиться
 							});	
-			
-			return subList.stream().collect(Collectors.toSet());
+			listRemover = subList.stream().collect(Collectors.toList());
+			return listRemover;
 	}
+
 	
-	
-	public static List<Set<RowOfList>> addNewList (List<Set<RowOfList>> value, Set<RowOfList> list){
+	public static List<List<RowOfList>> addNewList (List<List<RowOfList>> value, List<RowOfList> list){
 		value.add(list);
 		return value;
 	}
 	
-	public static List<Set<RowOfList>> addNewListOfList (Set<RowOfList> list){	 
-		 List<Set<RowOfList>> listOfList = new ArrayList<>();
+	public static List<List<RowOfList>> addNewListOfList (List<RowOfList> list){	 
+		 List<List<RowOfList>> listOfList = new ArrayList<>();
 		 listOfList.add(list);
 		 return listOfList;
+	}
+
+	public static List<RowOfList> getListRemover() {
+		return listRemover;
 	}
 }

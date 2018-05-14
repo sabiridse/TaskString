@@ -22,11 +22,13 @@ public class FileByTask {
 				if(record.length>2){
 					RowOfList row = new RowOfList(this.replaceChar(record[0]),
 												  this.replaceChar(record[1]),
-												  this.replaceChar(record[2]));				
+												  this.replaceChar(record[2]));
 							setOfRow.add(row);
 				}				
 			}				
 			reader.close();
+			
+			System.out.println("Размер СЕТА "+setOfRow.size());
 		}		
 		public void writeCsv(List<String> list) throws IOException{
 			
@@ -35,7 +37,7 @@ public class FileByTask {
 				.forEachOrdered(row -> writer.writeNext(new String[] {row}));					
 			writer.close();
 		}
-		private String replaceChar(String inPut){
+		private String replaceChar(String inPut){ 
 			if(inPut.isEmpty()) {
 				return "";
 			}
